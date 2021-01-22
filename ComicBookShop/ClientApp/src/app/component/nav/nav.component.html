@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link" routerLink="/">Home</a>
+        <a class="nav-item nav-link" *ngIf="isLoggedIn()==false" [loginDirective]>Login</a>
+        <a class="nav-item nav-link" *ngIf="isLoggedIn()==true" (click)="onLogout()">Logout</a>
+
+    </div>
+    <div class="navbar-nav ml-auto">
+        <div class="dropdown" *ngIf="isLoggedIn()">
+            <button type="button" class="btn btn-info" data-toggle="dropdown" (click)="getCartItemsList()">
+             <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger"></span>
+            </button>
+            <div class="dropdown-menu">
+                <form>
+                    <div class="row total-header-section">
+                        <div class="col-lg-6 col-sm-6 col-6">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger"></span>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
+                            <p>Total: <span class="text-info">{{getTotalPrice() | currencyPipe:"ron"}}</span></p>
+                        </div>
+                    </div>
+                    <div class="row cart-detail" *ngFor="let cartItem of cartItemsList">
+                        <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+                            <img [src]="cartItem.correspondingComicBook.coverUrl">
+                        </div>
+                        <div class="col cart-detail-product">
+                            <a [href]="cartItem.correspondingComicBook.title">{{cartItem.correspondingComicBook.title}}</a>
+                            <div class="col cart-detail-product">
+                                <span class="price text-info"> {{cartItem.correspondingComicBook.price |  currencyPipe:"ron"}}</span>
+                            </div>
+                            <div class="col cart-detail-product">
+                                <span class="count"> Quantity:{{cartItem.quantity}}</span>
+                            </div>
+                            <div class="col cart-detail-product">
+                                <ul class="pagination">
+                                    <li class="page-item"><a class="page-link" href="#" (click)="onReduceQuantity(cartItem)">-</a></li>
+                                    <li class="page-item"><a class="page-link" href="#" (click)="onAddQuantity(cartItem)">+</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class=" btn btn-primary" href="#" (click)="onPreviousPage()">
+                                    <</a>
+                            </li>
+                            <li class="page-item"><a class=" btn btn-primary" href="#" (click)="onNextPage()">></a></li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
+                            <button class="btn btn-primary btn-block" (click)="onCheckout()">Checkout</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</nav>

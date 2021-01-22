@@ -1,0 +1,11 @@
+<form [formGroup]="searchForm">
+<div class="input-group">
+    <div class="form-outline">
+      <input type="search" id="form1" class="form-control" formControlName="searchTerm"/>
+      <label class="form-label" for="form1">Search</label>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="onSearch()">
+      <i class="fas fa-search"></i>
+    </button>
+  </div>
+  <app-products [searchString]=newSearchTerm></app-products></form>
